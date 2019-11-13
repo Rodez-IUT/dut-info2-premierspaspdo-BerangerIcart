@@ -1,6 +1,6 @@
 <?php
 $host = 'localhost';
-$db   = 'my_activities';
+$db   = 'my-activities';
 $user = 'root';
 $pass = 'root';
 $charset = 'utf8mb4';
@@ -19,10 +19,10 @@ try {
 $status_id = "2";
 $userLike = "e%";
 
-$get = $pdo->prepare("	SELECT u.id, u.username, u.email, s.name status_intitul 
+$get = $pdo->query("	SELECT u.id, u.username, u.email, s.name status_intitul 
 						FROM users u 
 						INNER JOIN status s ON s.id = u.status_id 
-						WHERE u.status_id = $status_id AND u.username LIKE $userLike
+						WHERE u.status_id = $status_id AND u.username LIKE '$userLike'
 						ORDER BY u.username ASC");
 
 ?>
