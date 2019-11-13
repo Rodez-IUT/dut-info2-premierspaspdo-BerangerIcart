@@ -16,14 +16,17 @@ try {
      throw new PDOException($e->getMessage(), (int)$e->getCode());
 }
 
-$status_id = "2";
-$userLike = "e%";
+if (isset($_POST["submit"]) AND isset($_POST["statut"]) AND isset($_POST["lettre"])) {
+$status_id = $_POST["statut"];
+$userLike = $_POST["lettre"] ."%";
 
 $get = $pdo->query("	SELECT u.id, u.username, u.email, s.name status_intitul 
 						FROM users u 
 						INNER JOIN status s ON s.id = u.status_id 
 						WHERE u.status_id = $status_id AND u.username LIKE '$userLike'
 						ORDER BY u.username ASC");
+						
+}
 
 ?>
 <html>
@@ -32,6 +35,17 @@ $get = $pdo->query("	SELECT u.id, u.username, u.email, s.name status_intitul
 </head>
 <body>
 	<h1>All users</h1>
+	<div>
+		<form action="" method="POST">
+			Nom commençant par la lettre: <input type="text" name="lettre">
+			<br>Avec statut:
+			<select name="statut">
+				<option value="1">Waiting for account validation</option>
+				<option value="2">Active account</option>
+			</select>
+			<br><br><input type="submit" name="submit" value="Valider">
+		</form>
+	</div>
 	<table>
 		<tr>
 			<th>Id</th>
@@ -40,15 +54,17 @@ $get = $pdo->query("	SELECT u.id, u.username, u.email, s.name status_intitul
 			<th>Status</th>
 		</tr>
 		<?php
-		while ($fetch = $get->fetch()) {
-			?>
-			<tr>
-				<td><?= $fetch["id"] ?></td>
-				<td><?= $fetch["username"] ?></td>
-				<td><?= $fetch["email"] ?></td>
-				<td><?= $fetch["status_intitul"] ?></td>
-			</tr>
-			<?php
+		if (isset($get)) {
+			while ($fetch = $get->fetch()) {
+				?>
+				<tr>
+					<td><?= $fetch["id"] ?></td>
+					<td><?= $fetch["username"] ?></td>
+					<td><?= $fetch["email"] ?></td>
+					<td><?= $fetch["status_intitul"] ?></td>
+				</tr>
+				<?php
+			}
 		}
 		?>
 	</table>
