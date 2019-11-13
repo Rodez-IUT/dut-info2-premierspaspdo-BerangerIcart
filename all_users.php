@@ -64,6 +64,15 @@ if (isset($_POST["submit"]) AND isset($_POST["statut"]) AND isset($_POST["lettre
 					<td><?= $fetch["username"] ?></td>
 					<td><?= $fetch["email"] ?></td>
 					<td><?= $fetch["status_intitul"] ?></td>
+					<?php
+					
+					if ($fetch["status_intitul"] != "Waiting for account deletion") {
+						?>
+						<td><a href="./all_users.php?status_id=3&user_id=<?= $fetch["id"] ?>&action=askDeletion">Demander la suppression</a></td>
+						<?php
+					}
+					
+					?>
 				</tr>
 				<?php
 			}
