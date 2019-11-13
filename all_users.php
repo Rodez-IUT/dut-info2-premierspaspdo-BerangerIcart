@@ -43,6 +43,7 @@ if (isset($_POST["submit"]) AND isset($_POST["statut"]) AND isset($_POST["lettre
 			<select name="statut">
 				<option value="1">Waiting for account validation</option>
 				<option value="2">Active account</option>
+				<option value="3">Waiting for account deletion</option>
 			</select>
 			<br><br><input type="submit" name="submit" value="Valider">
 		</form>
