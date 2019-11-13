@@ -24,6 +24,9 @@ if (isset($_GET["action"]) AND $_GET["action"] == "askDeletion"
 	$insert = $pdo->prepare("INSERT INTO action_log (action_date, action_name, user_id) VALUES (?, ?, ?)");
 	$insert->execute([date("Y-m-d H:i:s"), $_GET["action"], $_GET["user_id"]]);
 	
+	// Enoncé erronné
+	$probleme = $pdo->query("SELECT uneValeur FROM uneTable");
+	
 	// Update le statut de l'user
 	$update = $pdo->prepare("UPDATE users SET status_id = ? WHERE id = ?");
 	$update->execute([$_GET["status_id"], $_GET["user_id"]]);
