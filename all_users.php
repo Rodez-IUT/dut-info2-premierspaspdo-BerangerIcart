@@ -16,6 +16,19 @@ try {
      throw new PDOException($e->getMessage(), (int)$e->getCode());
 }
 
+// Si demande de suppression
+if (isset($_GET["action"]) AND $_GET["action"] == "askDeletion"
+    AND isset($_GET["status_id"]) AND isset($_GET["user_id"])) {
+	
+	// Enregistrer l'action dans les logs
+	$insert = $pdo->prepare("INSERT INTO action_log (action_date, action_name, user_id) VALUES (?, ?, ?)");
+	$insert->execute([date("Y-m-d H:i:s"), $_GET["action"], $_GET["user_id"]]);
+	
+	// Update le statut de l'user
+	$update = $pdo->prepare("UPDATE users SET status_id = ? WHERE id = ?");
+	$update->execute([$_GET["status_id"], $_GET["user_id"]]);
+}
+
 if (isset($_POST["submit"]) AND isset($_POST["statut"]) AND isset($_POST["lettre"])) {
 	$status_id = $_POST["statut"];
 	$userLike = $_POST["lettre"] ."%";
