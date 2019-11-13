@@ -17,15 +17,16 @@ try {
 }
 
 if (isset($_POST["submit"]) AND isset($_POST["statut"]) AND isset($_POST["lettre"])) {
-$status_id = $_POST["statut"];
-$userLike = $_POST["lettre"] ."%";
+	$status_id = $_POST["statut"];
+	$userLike = $_POST["lettre"] ."%";
 
-$get = $pdo->query("	SELECT u.id, u.username, u.email, s.name status_intitul 
-						FROM users u 
-						INNER JOIN status s ON s.id = u.status_id 
-						WHERE u.status_id = $status_id AND u.username LIKE '$userLike'
-						ORDER BY u.username ASC");
-						
+	$get = $pdo->prepare("	SELECT u.id, u.username, u.email, s.name status_intitul 
+							FROM users u 
+							INNER JOIN status s ON s.id = u.status_id 
+							WHERE u.status_id = :status_id AND u.username LIKE :userLike
+							ORDER BY u.username ASC");
+
+	$get->execute(["status_id" => $status_id, "userLike" => $userLike]);
 }
 
 ?>
