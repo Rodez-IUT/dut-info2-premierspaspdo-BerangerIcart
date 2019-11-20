@@ -20,6 +20,9 @@ try {
 if (isset($_GET["action"]) AND $_GET["action"] == "askDeletion"
     AND isset($_GET["status_id"]) AND isset($_GET["user_id"])) {
 	
+	// Commencer la transaction
+	$pdo->beginTransaction();
+	
 	// Enregistrer l'action dans les logs
 	$insert = $pdo->prepare("INSERT INTO action_log (action_date, action_name, user_id) VALUES (?, ?, ?)");
 	$insert->execute([date("Y-m-d H:i:s"), $_GET["action"], $_GET["user_id"]]);
@@ -30,11 +33,14 @@ if (isset($_GET["action"]) AND $_GET["action"] == "askDeletion"
 	// Update le statut de l'user
 	$update = $pdo->prepare("UPDATE users SET status_id = ? WHERE id = ?");
 	$update->execute([$_GET["status_id"], $_GET["user_id"]]);
+	
+	// Commit la transaction
+	$pdo->commit();
 }
 
-if (isset($_POST["submit"]) AND isset($_POST["statut"]) AND isset($_POST["lettre"])) {
-	$status_id = $_POST["statut"];
-	$userLike = $_POST["lettre"] ."%";
+if (isset($_GET["submit"]) AND isset($_GET["statut"]) AND isset($_GET["lettre"])) {
+	$status_id = $_GET["statut"];
+	$userLike = $_GET["lettre"] ."%";
 
 	$get = $pdo->prepare("	SELECT u.id, u.username, u.email, s.name status_intitul 
 							FROM users u 
@@ -53,7 +59,7 @@ if (isset($_POST["submit"]) AND isset($_POST["statut"]) AND isset($_POST["lettre
 <body>
 	<h1>All users</h1>
 	<div>
-		<form action="" method="POST">
+		<form action="" method="GET">
 			Nom commençant par la lettre: <input type="text" name="lettre">
 			<br>Avec statut:
 			<select name="statut">
