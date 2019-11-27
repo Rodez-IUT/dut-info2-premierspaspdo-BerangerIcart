@@ -39,7 +39,7 @@ use yasmf\HttpHelper;
 			<select name="statut">
 				<option value="1">Waiting for account validation</option>
 				<option value="2">Active account</option>
-				<option value="3">Waiting for account deletion</option>
+				<!--<option value="3">Waiting for account deletion</option>-->
 			</select>
 			<br><br><input type="submit" name="submit" value="Valider">
 		</form>
@@ -64,7 +64,9 @@ use yasmf\HttpHelper;
 					
 					if ($fetch["status_intitul"] != "Waiting for account deletion") {
 						?>
+						<!--
 						<td><a href="./hello_world.php?action=deleteUser&controller=allUsers&status_id=3&user_id=<?= $fetch["id"] ?>&action2=askDeletion">Demander la suppression</a></td>
+						-->
 						<?php
 					}
 					

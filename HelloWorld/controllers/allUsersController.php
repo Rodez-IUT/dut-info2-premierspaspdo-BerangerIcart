@@ -18,6 +18,11 @@ class allUsersController
 		$status_id = HttpHelper::getParam('statut') ?: '' ;
         $view = new View("HelloWorld/views/all_users");
 		
+		// Empêcher demande d'un autre statut
+		if ($status_id != 1 AND $status_id != 2) {
+			throw new \Exception("Illegal Access Exception");
+		}
+		
 		$userLike = $lettre ."%";
 
 		$get = $pdo->prepare("	SELECT u.id, u.username, u.email, s.name status_intitul 
@@ -27,12 +32,16 @@ class allUsersController
 								ORDER BY u.username ASC");
 
 		$get->execute(["status_id" => $status_id, "userLike" => $userLike]);
+			
+		$view->setVar('get',$get);
 		
-        $view->setVar('get',$get);
         return $view;
     }
 	
 	public function deleteUser($pdo) {
+		// Empêcher suppression
+		throw new Exception("Illegal Access Exception");
+		
         $action = HttpHelper::getParam('action2') ?: '' ;
 		$user_id = HttpHelper::getParam('user_id') ?: '' ;
 		$status_id = HttpHelper::getParam('status_id') ?: '' ;
