@@ -14,8 +14,8 @@ class allUsersController
     }
 
     public function setRecherche($pdo) {
-        $lettre = HttpHelper::getParam('lettre') ?: '' ;
-		$status_id = HttpHelper::getParam('statut') ?: '' ;
+        $lettre = HttpHelper::getParam('start_letter') ?: '' ;
+		$status_id = HttpHelper::getParam('status_id') ?: '' ;
         $view = new View("HelloWorld/views/all_users");
 		
 		// Empêcher demande d'un autre statut
@@ -33,7 +33,7 @@ class allUsersController
 
 		$get->execute(["status_id" => $status_id, "userLike" => $userLike]);
 			
-		$view->setVar('get',$get);
+		$view->setVar('searchStmt',$get);
 		
         return $view;
     }
