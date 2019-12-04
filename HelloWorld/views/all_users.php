@@ -44,8 +44,8 @@ use yasmf\HttpHelper;
 <h1>All Users</h1>
 
 <form action="hello_world.php" method="get">
-    <input hidden name="action" value="defaultAction">
-	<input hidden name="controller" value="Users">
+    <input hidden name="action" value="setRecherche">
+	<input hidden name="controller" value="AllUsers">
     Start with letter:
     <input name="start_letter" type="text" value="<?php echo isset($_GET["start_letter"]) ? $_GET["start_letter"] : ""; ?>">
     and status is:
@@ -73,7 +73,7 @@ use yasmf\HttpHelper;
 				<td><?php echo $row['status'] ?></td>
 				<td>
 					<?php if ($row['status_id'] != 3) { ?>
-						<a href="user.php?&user_id=<?php echo $row['user_id']?>&action=editUser">Edit</a>
+						<a href="hello_world.php?controller=AllUsers&user_id=<?php echo $row['user_id']?>&action=editUser">Edit</a>
 					<?php } ?>
 				</td>
 			</tr>

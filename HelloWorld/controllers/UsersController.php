@@ -1,6 +1,10 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'].'/HelloWorld/controllers/controllerUsersDAF.php';
+namespace controllers;
+
+require_once $_SERVER['DOCUMENT_ROOT'].'/HelloWorld/controllers/UsersDAF.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/HelloWorld/yasmf/Input.php';
+
+class UsersController {
 
 /**
  * @param $pdo the pdo object
@@ -13,7 +17,7 @@ function defaultAction($pdo) {
     }
     $start_letter = htmlspecialchars(get('start_letter').'%') ?: '%';
     $searchStmt = findUsersByUsernameAndStatus($pdo, $start_letter, $status_id) ;
-};
+}
 
 /**
  * @param $pdo the pdo object
@@ -47,3 +51,4 @@ function askDeletion($pdo) {
     defaultAction($pdo);
 }
 
+}

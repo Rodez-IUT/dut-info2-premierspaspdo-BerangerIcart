@@ -27,7 +27,8 @@ use yasmf\HttpHelper;
 
 <h1>Edit user</h1>
 
-<form action="all_users.php" method="get">
+<form action="hello_world.php" method="get">
+	<input hidden name="controller" value="AllUsers">
     <input hidden name="action" value="saveUser">
     <input hidden name="user_id" value="<?php echo $user["user_id"] ?>">
     <table>
